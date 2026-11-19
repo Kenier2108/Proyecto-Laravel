@@ -9,8 +9,10 @@
 @endif
 <br><br>
 
-<a href="{{url('empleado/create')}}" class="btn btn-success">Registrar Nuevo Empleado</a>
-<br><br>
+@if (auth()->user()->rol !== 'consulta')
+    <a href="{{url('empleado/create')}}" class="btn btn-success">Registrar Nuevo Empleado</a>
+    <br><br>
+@endif
 <table class="table table-light">
     <thead class="thead-light">
         <tr>
@@ -20,7 +22,9 @@
             <th>P. Apellido</th>
             <th>S. Apellido</th>
             <th>Correo</th>
-            <th>Accion</th>
+            @if (auth()->user()->rol !== 'consulta')
+                <th>Accion</th>
+            @endif
         </tr>
     </thead>
     <tbody>
@@ -34,17 +38,18 @@
             <td>{{$datos->PrimerApel}}</td>
             <td>{{$datos->SegundoApel}}</td>
             <td>{{$datos->Correo}}</td>
-            <td>
-                <a href="{{url('/empleado/'.$datos->id.'/edit')}}" class="btn btn-warning">
-                    Editar
-                </a> |
-                <form action="{{url('/empleado/'.$datos->id)}}" method="post" class="d-inline">
-                    @csrf
-                    {{method_field('DELETE')}}
-                    <input type="submit" onclick="return confirm('¿Quieres borrar?')" value="Borrar" class="btn btn-danger">
-                </form>
-
-            </td>
+            @if (auth()->user()->rol !== 'consulta')
+                <td>
+                    <a href="{{url('/empleado/'.$datos->id.'/edit')}}" class="btn btn-warning">
+                        Editar
+                    </a> |
+                    <form action="{{url('/empleado/'.$datos->id)}}" method="post" class="d-inline">
+                        @csrf
+                        {{method_field('DELETE')}}
+                        <input type="submit" onclick="return confirm('¿Quieres borrar?')" value="Borrar" class="btn btn-danger">
+                    </form>
+                </td>
+            @endif
 
         </tr>
 

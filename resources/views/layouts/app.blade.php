@@ -39,6 +39,14 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('categoria.index') }}">{{ __('Categorías') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('indicadores.index') }}">{{ __('indicadores') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('movimientos.index') }}">{{ __('Movimientos') }}</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('ventas.index') }}">{{ __('Ventas') }}</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

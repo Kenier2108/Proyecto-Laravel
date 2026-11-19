@@ -46,7 +46,7 @@ class ProductoCategoriaTest extends TestCase
 
     public function test_las_pantallas_de_productos_y_categorias_se_muestran_a_usuarios_autenticados(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->create(['rol' => 'administrador']));
         $categoria = Categoria::create(['nom_categoria' => 'Bebidas']);
         $producto = Producto::create([
             'nom_producto' => 'Agua',
@@ -64,5 +64,18 @@ class ProductoCategoriaTest extends TestCase
         $this->get(route('categoria.index'))->assertOk();
         $this->get(route('categoria.create'))->assertOk();
         $this->get(route('categoria.edit', $categoria))->assertOk();
+    }
+
+    public function test_el_rol_inventario_no_puede_crear_categorias(): void
+    {
+        $this->actingAs(User::factory()->create(['rol' => 'inventario']));
+
+        $this->get(route('categoria.create'))->assertForbidden();
+        $this->post(route('categoria.store'), ['nom_categoria' => 'Nueva'])->assertForbidden();
+        $this->get(route('categoria.index'))
+            ->assertOk()
+            ->assertDontSee(route('categoria.create'));
+
+        $this->assertDatabaseMissing('categoria', ['nom_categoria' => 'Nueva']);
     }
 }

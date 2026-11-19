@@ -1,9 +1,8 @@
-<h1>{{ $modo }} Categoría</h1>
-<div class="form-group">
-    <label for="nom_categoria">Nombre de la categoría</label>
+<h1 class="h4 mb-3">{{ $modo }} Categoría</h1>
+<div class="mb-3">
+    <label for="nom_categoria" class="form-label">Nombre de la categoría</label>
     <input class="form-control" type="text" name="nom_categoria" id="nom_categoria" value="{{ old('nom_categoria', $categoria->nom_categoria ?? '') }}" required>
 </div>
-<br>
 <button type="submit" class="btn btn-success">{{ $modo }} registro</button>
 <a href="{{ route('categoria.index') }}" class="btn btn-secondary">Cancelar</a>
 @if ($errors->any())
